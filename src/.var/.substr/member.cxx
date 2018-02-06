@@ -1,6 +1,9 @@
 // operator -
 
-const noware::nr noware::var::operator - (void) const
+noware::var const noware::var::operator - (void) const
 {
-	return -nr;
+	if (_type == type::nr)
+		return -_nr;
+	
+	return *this;
 }

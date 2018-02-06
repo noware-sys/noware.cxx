@@ -42,10 +42,10 @@ namespace noware
 	//namespace tool
 	//{
 		template <typename type>
-		const bool serialize (std::string &/* serial*/, const type &/* object*/);
+		bool const serialize (std::string &/* serial*/, type const &/* object*/);
 		
 		template <typename type>
-		const bool deserialize (type &/* object*/, const std::string &/* serial*/);
+		bool const deserialize (type &/* object*/, std::string const &/* serial*/);
 		
 		//template <typename type>
 		//bool unserialize (std::string, type &);
@@ -59,22 +59,24 @@ namespace noware
 		//template <typename type>
 		//std::string serialize (const type &);
 		
+		/*
 		class serial
 		{
 			public:
 				//serial (void);
 				//virtual ~serial (void);
 				
-				virtual const std::string serialize (void) const;
-				virtual const bool deserialize (const std::string &/* serial*/);
+				virtual std::string const serialize (void) const;
+				virtual bool const deserialize (std::string const &/* serial* /);
 			//protected:
 				// These need to be redeclared
 				// in the inheriting class:
 				friend class boost::serialization::access;
 				
 				template <typename archive>
-				void serialize (archive &, const unsigned int &/* version*/);
+				void serialize (archive &, unsigned int const &/* version* /);
 		};
+		*/
 	//}
 }
 

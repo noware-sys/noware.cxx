@@ -3,20 +3,22 @@
 //#define __ENTITY
 
 #include <string>
+#include <map>
 
 //#include <boost/any.hpp>
 
 //#include "content/value.h++"
 #include "serial.hxx"
-#include "array.hxx"
+//#include "misc/itr.hxx"
 #include "var.hxx"
+//#include "array.hxx"
 //#include "entity_container.h++"
 
 //#include "../machine/resources/memory.h++"
 
 //#include "../math.h++"
 ////#include "../machine/resource.h++"
-
+/*
 #ifndef LIB
 	#define LIB noware
 #endif
@@ -32,8 +34,8 @@
 	//#define NTT group
 #endif
 //#include "entity-pre.h++"
-
-namespace LIB
+*/
+namespace noware
 {
 	//namespace container
 	//{
@@ -76,203 +78,99 @@ namespace LIB
 //				LIB::array <LIB::container::NTT, LIB::container::any> group;
 //		};
 		
-		template <typename value = LIB::NAME_V, typename key = LIB::NAME_V>
-		class NTT
+		template <typename val_t = var, typename key_t = var>
+		class tree
+			: virtual public serial
+			//, virtual public misc::itrble <val_t>
 		{
-			public:
-				//friend class LIB::machine::resources::memory::key;
-				//friend class LIB::machine::resources::memory::NTT;
-				
-				class container
-				{
-					public:
-						//friend class LIB::machine::resources::memory::NTT::container;
-						
-						//typedef LIB::container::any value, key;
-						//typedef LIB::container::any key;
-						
-						container (void);
-						container (const container &);
-						container (const LIB::NTT <value, key> &);
-						container (const LIB::NAME_A <value, key> &);
-						container (const value &);
-						~container (void);
-						
-						container & operator = (const container &);
-						container & operator = (const value &);
-						container & operator = (const LIB::NTT <value, key> &);
-						container & operator = (const LIB::NAME_A <value, key> &);
-						
-						friend class boost::serialization::access;
-						
-						template <typename archive>
-						void serialize (archive &/* Archive (stream). */, const unsigned int &/* Version. */);
-						
-						//template <typename archive>
-						//void save (archive &/* Archive (stream). */, const unsigned int &/* Version. */) const;
-						
-						//template <typename archive>
-						//void load (archive &/* Archive (stream). */, const unsigned int &/* Version. */);
-						
-						enum /*class */type
-						{
-							literal,
-							group
-						};
-						
-						const type get_type (void) const;
-						// Determine if this container is empty.
-						const bool empty (void) const;
-						// Determine if this container is full.
-						const bool full (void) const;
-						
-						//std::string text;
-						//bool reference;
-						const bool operator == (const container &) const;
-						const bool operator != (const container &) const;
-						const bool operator == (const value &) const;
-						const bool operator != (const value &) const;
-						const bool operator == (const LIB::NTT <value, key> &) const;
-						const bool operator != (const LIB::NTT <value, key> &) const;
-						const bool operator == (const LIB::NAME_A <value, key> &) const;
-						const bool operator != (const LIB::NAME_A <value, key> &) const;
-						
-						const std::string serialize (void) const;
-						const bool deserialize (const std::string &);
-						
-						friend class NTT;
-					protected:
-						type t;
-						
-						value lit;
-						
-						LIB::NAME_A <NTT <value, key> *, key> grp;
-						
-						const bool content_clear_literal (void);
-						const bool content_clear_group (void);
-				};
-				
-				
-				class iterator
-				{
-					public:
-						iterator (void);
-						iterator (const iterator &);
-						
-						const bool operator == (const iterator &) const;
-						const bool operator != (const iterator &) const;
-						const iterator & operator ++ (void);
-						//const iterator & operator -- (void);
-						NTT <value, key> & operator * (void) const;
-						//LIB::NAME_A <NTT <value, key> *, key> & operator * (void) const;
-						
-						const key & k (void) const;
-						//NTT <value, key> ** reference;
-						
-						typename LIB::NAME_A <NTT <value, key> *, key>::iterator iter;
-						//NTT <value, key> * parent;
-				};
-				/*
-				class const_iterator
-				{
-					public:
-						const_iterator (void);
-						const_iterator (const const_iterator &);
-						
-						const bool operator == (const const_iterator &) const;
-						const bool operator != (const const_iterator &) const;
-						const const_iterator & operator ++ (void);
-						NTT <value, key> & operator * (void) const;
-						
-						//NTT <value, key> ** reference;
-						
-						typename LIB::NAME_A <NTT <value, key> *, key>::const_iterator iter;
-						//NTT <value, key> * parent;
-				};
-				*/
-				
-				//class const_iterator
-				//{};
-				
-				//typedef typename NTT <value, key>::iterator iterator;
-				//typedef typename NTT <value, key>::const_iterator iterator_const;
 			protected:
-				container content;
+				//type t;
+				bool _lit;
 				
-				//key * k;
+				//contnr data;
+				val_t lit;
+				std::map <key_t, tree <val_t, key_t>> grp;
 			public:
-				NTT (void);
-				NTT (const NTT <value, key> &);
-				NTT (const LIB::NAME_A <value, key> &);
-				NTT (const value &);
-				//NTT (const machine::resources::memory::key &);
-				
-				const NTT <value, key> & operator = (const NTT <value, key> &);
-				const NTT <value, key> & operator = (const LIB::NAME_A <value, key> &);
-				const NTT <value, key> & operator = (const value &);
-				//const NTT <value, key> & operator = (const machine::resources::memory::key &);
+				//enum /*class */type
+				//{
+				//	lit,
+				//	grp
+				//};
 				
 				friend class boost::serialization::access;
 				//friend class container;
 				
-				template <typename archive>
-				void serialize (archive &/* Archive (stream). */, const unsigned int &/* Version. */);
+				tree <val_t, key_t> (void);
+				tree <val_t, key_t> (val_t const &);
+				tree <val_t, key_t> (tree <val_t, key_t> const &);
+				//tree (LIB::NAME_A <value, key> const &);
+				//NTT (const machine::resources::memory::key &);
 				
-				//const iterator_const & begin (void) const;
-				//const iterator_const & end (void) const;
+				virtual tree <val_t, key_t> const & operator = (val_t const &);
+				virtual tree <val_t, key_t> const & operator = (tree <val_t, key_t> const &);
+				//const NTT <value, key> & operator = (const LIB::NAME_A <value, key> &);
+				//const NTT <value, key> & operator = (const machine::resources::memory::key &);
 				
-				const iterator begin (void);
-				const iterator end (void);
-				const /*const_*/iterator begin (void) const;
-				const /*const_*/iterator end (void) const;
+				virtual bool const operator == (val_t const &) const;
+				virtual bool const operator != (val_t const &) const;
+				virtual bool const operator == (tree <val_t, key_t> const &) const;
+				virtual bool const operator != (tree <val_t, key_t> const &) const;
+				//bool const operator == (LIB::NAME_A <value, key> const &) const;
+				//bool const operator != (LIB::NAME_A <value, key> const &) const;
 				
-				//const LIB::container::any & operator = (const LIB::container::any);
-				//operator = (const std::string &);
-				// const LIB::NAME_A <NTT *, container::key> & operator = (const LIB::NAME_A <NTT *, container::key> &);
-				NTT <value, key> & operator [] (const key &);
-				const NTT <value, key> & operator [] (const key &) const;
-				
-				const bool unset (const key &);
-				const bool exists (const key &, const bool &/* recursive*/ = false) const;
-				const bool exist (const key &, const bool &/* recursive*/ = false) const;
-				const bool clear (void);
-				const bool empty (void) const;
-				const bool full (void) const;
-				const LIB/*::math*/::nr::natural size (const bool &/* recursive*/ = false, const bool &/* grouped/inclusive (consider a group as an item, in addition to its children) (only considered if recursive == true)*/ = false) const;
-				const bool rename (const key &/* old*/, const key &/* new*/);
-				
-				//const key * & get_key (void);
-				
-				operator const LIB::NAME_A <value, key> (void) const;
-				//operator value & (void);
-				operator const value & (void);
-				operator const value & (void) const;
-				const value & operator * (void);
-				const value & operator * (void) const;
-				const value & operator -> (void);
-				const value & operator -> (void) const;
-				const value & operator () (void);
-				const value & operator () (void) const;
-				//const value & value (void);
-				//const value & value (void) const;
-				const value & get_value (void);
-				const value & get_value (void) const;
-				
-				const bool operator == (const NTT <value, key> &) const;
-				const bool operator != (const NTT <value, key> &) const;
-				const bool operator == (const value &) const;
-				const bool operator != (const value &) const;
-				const bool operator == (const LIB::NAME_A <value, key> &) const;
-				const bool operator != (const LIB::NAME_A <value, key> &) const;
 				//const bool operator == (const machine::resources::memory::key &);
 				//const bool operator != (const machine::resources::memory::key &);
 				//const value & operator ++ (void);
 				
-				const std::string serialize (void) const;
-				const bool deserialize (const std::string &);
+				//const LIB::container::any & operator = (const LIB::container::any);
+				//operator = (const std::string &);
+				// const LIB::NAME_A <NTT *, container::key> & operator = (const LIB::NAME_A <NTT *, container::key> &);
+				virtual tree <val_t, key_t> & operator [] (key_t const &);
+				//tree <val_t, key_t> const & operator [] (const key &) const;
 				
-				const bool is_group (void) const;
-				const bool is_literal (void) const;
+				virtual bool const unset (key_t const &);
+				virtual bool const exist (key_t const &, bool const &/* recursive*/ = false) const;
+				virtual bool const clear (void);
+				virtual bool const empty (void) const;
+				virtual bool const full (void) const;
+				virtual nr const size (bool const &/* recursive*/ = false, bool const &/* grouped/inclusive (consider a group as an item, in addition to its children) (only considered if recursive == true)*/ = false) const;
+				virtual bool const rename (key_t const &/* old*/, key_t const &/* new*/);
+				
+				//const key * & get_key (void);
+				
+				//operator const LIB::NAME_A <value, key> (void) const;
+				//virtual operator val_t const & (void) const;
+				virtual operator val_t & (void);
+				//operator const value & (void) const;
+				virtual val_t & operator * (void);
+				//virtual val_t const & operator * (void) const;	// required by misc::itr
+				//const value & operator -> (void);
+				//const value & operator -> (void) const;
+				//const value & operator () (void);
+				//const value & operator () (void) const;
+				//const value & value (void);
+				//const value & value (void) const;
+				//const value & get_value (void);
+				//const value & get_value (void) const;
+				
+				virtual std::string const serialize (void) const;
+				virtual bool const deserialize (std::string const &);
+				
+				//const bool grp (void) const;
+				virtual bool const & literal (void) const;
+				
+				
+				template <typename archive>
+				virtual void serialize (archive &/* Archive (stream). */, const unsigned int &/* Version. */);
+				
+				//const iterator_const & begin (void) const;
+				//const iterator_const & end (void) const;
+				
+				virtual std::map <key_t, val_t>::iterator & begin (void) const;
+				virtual std::map <key_t, val_t>::iterator & end (void) const;
+				//const /*const_*/itr begin (void) const;
+				//const /*const_*/itr end (void) const;
+				
 		};
 		
 		//typedef set <> set;
@@ -281,8 +179,8 @@ namespace LIB
 	
 	// http://stackoverflow.com/questions/6907194/how-to-typedef-a-template-class
 	
-	template <typename value = noware::var, typename key = noware::var>
-	using tree = tree <value, key>;
+	template <typename value_t = noware::var, typename key_t = noware::var>
+	using tree = tree <value_t, key_t>;
 	
 	//template <typename value, typename key>
 	//using NTT = container::NTT <value, key>;

@@ -1,18 +1,35 @@
-/*
-const bool noware::var::is (const type & t) const
+noware::var::type const & noware::var::t (void) const
 {
-	return this -> t == t;
+	return _type;
+}
+
+/*
+const bool cln::nr::is (const type & t) const
+{
+	return true;
+}
+
+const bool cln::nr::is (const category & cat) const
+{
+	return false;
 }
 */
 
-const noware::var::type noware::var::kind (void) const
+/*
+cln::nr::type const cln::nr::kind (void) const
 {
-	return t;
+	return type::complex;
 }
+
+cln::nr::category const cln::nr::cat (void) const
+{
+	return category::zero;
+}
+*/
 
 /*
 // Complement.
-const noware::nr noware::nr::operator ~ (void) const
+const cln::nr cln::nr::operator ~ (void) const
 {
 	if (content.t == math::type::numeric)
 		return noware::tool::complement (content.number);
@@ -22,7 +39,7 @@ const noware::nr noware::nr::operator ~ (void) const
 */
 /*
 // Modulus.
-const noware::nr noware::nr::operator | (void) const
+const cln::nr cln::nr::operator | (void) const
 {
 	if (content.t == math::type::numeric)
 		return noware::tool::modulus (content.number);
@@ -31,7 +48,7 @@ const noware::nr noware::nr::operator | (void) const
 }
 */
 /*
-const bool noware::nr::operator ! (void) const
+const bool cln::nr::operator ! (void) const
 {
 	if (content.t == math::type::numeric)
 		//return content.number == 0 ? true : false;
@@ -40,43 +57,45 @@ const bool noware::nr::operator ! (void) const
 		return content.text.length () == 0;
 }
 
-const bool noware::nr::operator && (const nr & other) const
+const bool cln::nr::operator && (const nr & other) const
 {
 	return bool (*this) && bool (other);
 }
 
-const bool noware::nr::operator && (const bool & other) const
+const bool cln::nr::operator && (const bool & other) const
 {
 	return bool (*this) && other;
 }
 
-const bool noware::nr::operator || (const nr & other) const
+const bool cln::nr::operator || (const nr & other) const
 {
 	return bool (*this) || bool (other);
 }
 
-const bool noware::nr::operator || (const bool & other) const
+const bool cln::nr::operator || (const bool & other) const
 {
 	return bool (*this) || other;
 }
 */
 
-const noware::var & noware::var::operator ++ (void)
+noware::var const & noware::var::operator ++ (void)
 {
-	++contnt;
+	if (_type == type::nr)
+		++_nr;
 	
 	return *this;
 }
 
-const noware::var & noware::var::operator -- (void)
+noware::var const & noware::var::operator -- (void)
 {
-	--contnt;
+	if (_type == type::nr)
+		--_nr;
 	
 	return *this;
 }
 
 /*
-const noware::nr noware::nr::operator ++ (const int other)
+const cln::nr cln::nr::operator ++ (const int other)
 {
 	nr previous (*this);
 	
@@ -85,7 +104,7 @@ const noware::nr noware::nr::operator ++ (const int other)
 	return previous;
 }
 
-const noware::nr noware::nr::operator -- (const int other)
+const cln::nr cln::nr::operator -- (const int other)
 {
 	nr previous (*this);
 	
@@ -101,12 +120,12 @@ namespace noware
 	//namespace math
 	//{
 		/*
-		const bool operator && (const bool & other, const noware::nr & self)
+		const bool operator && (const bool & other, const cln::nr & self)
 		{
 			return other && bool (self);
 		}
 		
-		const bool operator || (const bool & other, const noware::nr & self)
+		const bool operator || (const bool & other, const cln::nr & self)
 		{
 			return other || bool (self);
 		}
@@ -114,10 +133,7 @@ namespace noware
 		// operator <<
 		std::ostream & operator << (std::ostream & stream, const var & self)
 		{
-			if (self.t == var::type::nr)
-				stream << self.nr;
-			else
-				stream << self.txt;
+			stream << self.operator std::string const ();
 			
 			return stream;
 		}
@@ -132,7 +148,7 @@ namespace noware
 			/*
 			try
 			{
-				stream >> self.contnt;
+				stream >> self.val;
 			}
 			catch (...)
 			{

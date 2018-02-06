@@ -63,9 +63,9 @@
 //#include "../default.h++"
 //#include "../name.hxx"
 //#include "../math.hxx"
-#include "../serial.hxx"
+//#include "../serial.hxx"
 #include "../var.hxx"
-#include "../nr.hxx"
+#include <cln/nr.hxx>
 
 //#include ".array/.incl.hxx"
 
@@ -94,7 +94,7 @@ namespace noware
 			key == key
 		*/
 		//template <typename value, key> 
-		template <typename value_t = noware::var, typename key_t = noware::var>
+		template <typename val_t = noware::var, typename key_t = noware::var/*, typename alloc_t = std::allocator <val_t>*/>
 		class array
 			//: public mach::dev
 			//, public net::node
@@ -108,27 +108,28 @@ namespace noware
 				//array (void) = default;
 				//virtual ~array (void) = default;
 				
-				virtual const noware::nr size (void) const;
-				virtual const bool exist (const key_t &/* key*/) const;
-				virtual const bool is_full (void) const;
-				virtual const bool is_empty (void) const;
-				virtual const bool/* success*/ set (const key_t &/* key*/, const value_t &/* value*/);
-				virtual const bool/* success*/ get (const key_t &/* key*/, value_t &/* value*/) const;
-				//const key & get_key (const key &) const;
-				virtual const bool/* success*/ clear (void);
-				virtual const bool/* success*/ remove (const key_t &/* key*/);
-				virtual const bool/* success*/ rename (const key_t &/* old_k*/, const key_t &/* new_k*/);
-				virtual value_t &/* value*/ operator [] (const key_t &/* key*/);
-				virtual value_t &/* value*/ operator [] (const std::nullptr_t &/* null*/);
+				virtual cln::nr const size (void) const;
+				virtual bool const exist (key_t const &/* key*/) const;
+				virtual bool const empty (void) const;
+				virtual bool const full (void) const;
+				virtual bool const/* success*/ get (key_t const &/* key*/, val_t/* const **/ &/* value*/) const;
+				virtual bool const/* success*/ set (key_t const &/* key*/, val_t const &/* value*/);
+				//key const & get_key (const key &) const;
+				virtual bool const/* success*/ clear (void);
+				virtual bool const/* success*/ remove (key_t const &/* key*/);
+				virtual bool const/* success*/ rename (key_t const &/* old_k*/, key_t const &/* new_k*/);
+				virtual val_t &/* value*/ operator [] (key_t const &/* key*/);
+				//virtual val_t &/* value*/ operator [] (std::nullptr_t const &/* null*/);
 			//protected:
 			//	const bool get_ptr (const key_t &, value_t *) const;
+			//	value_t _backup;
 		};
 		
 		// http://stackoverflow.com/questions/6907194/how-to-typedef-a-template-class
 		
 		//typedef array <> array;
-		template <typename value_t = noware::var, typename key_t = noware::var>
-		using array = array <value_t, key_t>;
+		template <typename val_t = noware::var, typename key_t = noware::var/*, typename alloc_t = std::allocator <val_t>*/>
+		using array = array <val_t, key_t/*, alloc_t*/>;
 	}
 	
 	//template <typename value = noware::var, typename key = noware::var>

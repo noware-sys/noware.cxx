@@ -2,200 +2,186 @@
 
 noware::var::var (void)
 {
-	////txt = "";
-	////var = 0;
-	//t = type::txt;
-	
 	//_exact = true;
-	//*this = other;
 }
 
-noware::var::var (const var & other)
+noware::var::var (noware::var const & other)
 {
 	*this = other;
 }
-
-noware::var::var (const noware::nr & other)
-{
-	//txt = "";
-	//var = other;
-	//t = type::var;
-	*this = other;
-}
-
 /*
-noware::var::var (const noware::container::text & other)
+noware::var::var (noware::container::text const & other)
 {
 	*this = other;
 }
 */
-
-noware::var::var (const std::string & other)
+noware::var::var (std::string const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const char * other)
+noware::var::var (char const other [])
 {
 	//*this = std::string (other);
 	*this = other;
 }
-
 /*
-noware::var::var (const unsigned char other [])
+noware::var::var (unsigned char other [])
 {
 	*this = other;
 }
 
-noware::var::var (const signed char other [])
+noware::var::var (signed char other [])
 {
 	*this = other;
 }
 */
 
 /*
-noware::var::var (const signed char other [])
+noware::var::var (signed char other [])
 {
 	*this = std::string (other);
 }
 
-noware::var::var (const unsigned char other [])
+noware::var::var (unsigned char other [])
 {
 	*this = std::string (other);
 }
 */
-//noware::var::var (const char *& other)
+//noware::var::var (char *const & other)
 //{
 //	*this = noware::tool::string (other);
 //}
 /*
-noware::var::var (const signed char *& other)
+noware::var::var (signed char *const & other)
 {
 	*this = std::string (other);
 }
 
-noware::var::var (const unsigned char *& other)
+noware::var::var (unsigned char *const & other)
 {
 	*this = std::string (other);
 }
 */
-
-noware::var::var (const char & other)
+noware::var::var (char const & other)
 {
 	//*this = noware::tool::string (other);
 	*this = other;
 }
-
 /*
-noware::var::var (const signed char & other)
+noware::var::var (signed char const & other)
 {
 	//*this = noware::tool::string (char (other));
 	*this = other;
 }
 
-noware::var::var (const unsigned char & other)
+noware::var::var (unsigned char const & other)
 {
 	//*this = noware::tool::string (char (other));
 	*this = other;
 }
 */
-
-noware::var::var (const complex & other)
+noware::var::var (cln::nr const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const real & other)
+noware::var::var (cln::nr::complex const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const rational & other)
+noware::var::var (cln::nr::real const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const integer & other)
+noware::var::var (cln::nr::rational const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const _float & other)
+noware::var::var (cln::nr::integer const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const short_float & other)
+noware::var::var (cln::nr::_float const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const single_float & other)
+noware::var::var (cln::nr::short_float const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const double_float & other)
+noware::var::var (cln::nr::single_float const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const long_float & other)
+noware::var::var (cln::nr::double_float const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const long double & other)
+noware::var::var (cln::nr::long_float const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const double & other)
+noware::var::var (long double const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const float & other)
+noware::var::var (double const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const unsigned long long int & other)
+noware::var::var (float const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const unsigned long int & other)
+noware::var::var (unsigned long long int const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const unsigned int & other)
+noware::var::var (unsigned long int const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const unsigned short int & other)
+noware::var::var (unsigned int const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const signed long long int & other)
+noware::var::var (unsigned short int const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const signed long int & other)
+noware::var::var (signed long long int const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const signed int & other)
+noware::var::var (signed long int const & other)
 {
 	*this = other;
 }
 
-noware::var::var (const signed short int & other)
+noware::var::var (signed int const & other)
+{
+	*this = other;
+}
+
+noware::var::var (signed short int const & other)
 {
 	*this = other;
 }

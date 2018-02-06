@@ -2,19 +2,21 @@
 
 #include "serial.hxx"
 
-//#include "../serial.cxx"
+#include "../serial.cxx"
 
 template <typename archive>
-void noware::serial::serialize (archive &, const unsigned int &/* version*/)
+void noware::serial::serialize (archive &, unsigned int const &/* version*/)
 {
 }
 
-const std::string noware::serial::serialize (void) const
+std::string const noware::serial::serialize (void) const
 {
-	return noware::serialize <noware::serial> (*this);
+	std::string serial;
+	noware::serialize <noware::serial> (serial, *this);
+	return serial;
 }
 
-const bool noware::serial::deserialize (const std::string & serial)
+bool const noware::serial::deserialize (std::string const & serial)
 {
 	return noware::deserialize <noware::serial> (*this, serial);
 }

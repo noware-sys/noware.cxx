@@ -3,8 +3,8 @@
 //#include ".array/.cxx"
 //#include <type_traits>
 
-#include "../serial.cxx"
-#include "../nr.cxx"
+//#include "../serial.cxx"
+#include <cln/nr.cxx>
 #include "../var.cxx"
 
 // #include <typeinfo>
@@ -15,103 +15,115 @@
 
 /*
 // Static constants.
-template <typename value_t, typename key_t>
-value noware::array <value_t, key_t>::value;
+template <typename val_t, typename key_t>
+value noware::array <val_t, key_t>::value;
 
-template <typename value_t, typename key_t>
-key noware::array <value_t, key_t>::key;
+template <typename val_t, typename key_t>
+key noware::array <val_t, key_t>::key;
 */
 
 //
 // For array functionality
 //
 /*
-template <typename value_t, typename key_t>
+template <typename val_t, typename key_t>
 template <typename archive>
-void noware::contnr::array <value_t, key_t>::serialize (archive &, const unsigned int & version)
+void noware::contnr::array <val_t, key_t>::serialize (archive &, const unsigned int & version)
 {
 }
 */
 
 //const std::string noware::array::group_default = "array";
 /*
-template <typename value_t, typename key_t>
-noware::array <value_t, key_t>::array (void)
+template <typename val_t, typename key_t>
+noware::array <val_t, key_t>::array (void)
 {
 }
 
-template <typename value_t, typename key_t>
-noware::array <value_t, key_t>::~array (void)
+template <typename val_t, typename key_t>
+noware::array <val_t, key_t>::~array (void)
 {
 }
 */
-template <typename value_t, typename key_t>
-const bool noware::contnr::array <value_t, key_t>::set (const key_t &/* key*/, const value_t &/* value*/)
+template <typename val_t, typename key_t/*, typename alloc_t*/>
+bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::get (key_t const &/* key*/, val_t const * &/* value*/) const
 {
 	return false;
 }
 
-template <typename value_t, typename key_t>
-const bool noware::contnr::array <value_t, key_t>::get (const key_t &/* key*/, value_t &/* value*/) const
+template <typename val_t, typename key_t/*, typename alloc_t*/>
+bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::set (key_t const &/* key*/, val_t const &/* value*/)
 {
 	return false;
 }
 
-template <typename value_t, typename key_t>
-const bool noware::contnr::array <value_t, key_t>::clear (void)
+template <typename val_t, typename key_t/*, typename alloc_t*/>
+bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::clear (void)
 {
 	return false;
 }
 
-template <typename value_t, typename key_t>
-const noware::nr noware::contnr::array <value_t, key_t>::size (void) const
+template <typename val_t, typename key_t/*, typename alloc_t*/>
+const cln::nr noware::contnr::array <val_t, key_t/*, alloc_t*/>::size (void) const
 {
 	return 0;
 }
 
-template <typename value_t, typename key_t>
-const bool noware::contnr::array <value_t, key_t>::exist (const key_t & key) const
+template <typename val_t, typename key_t/*, typename alloc_t*/>
+bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::exist (key_t const & key) const
 {
-	value_t value;
-	return get (key, value);
+	val_t const * val;
+	return get (key, val);
 }
 
-template <typename value_t, typename key_t>
-const bool noware::contnr::array <value_t, key_t>::remove (const key_t &/* key*/)
-{
-	return false;
-}
-
-template <typename value_t, typename key_t>
-const bool noware::contnr::array <value_t, key_t>::rename (const key_t &/* old_k*/, const key_t &/* new_k*/)
+template <typename val_t, typename key_t/*, typename alloc_t*/>
+bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::remove (key_t const &/* key*/)
 {
 	return false;
 }
 
-template <typename value_t, typename key_t>
-const bool noware::contnr::array <value_t, key_t>::is_full (void) const
+template <typename val_t, typename key_t/*, typename alloc_t*/>
+bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::rename (key_t const &/* old_k*/, key_t const &/* new_k*/)
 {
 	return false;
 }
 
-template <typename value_t, typename key_t>
-const bool noware::contnr::array <value_t, key_t>::is_empty (void) const
+template <typename val_t, typename key_t/*, typename alloc_t*/>
+bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::full (void) const
+{
+	return false;
+}
+
+template <typename val_t, typename key_t/*, typename alloc_t*/>
+bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::empty (void) const
 {
 	return size () <= 0;
 }
 
-template <typename value_t, typename key_t>
-value_t & noware::contnr::array <value_t, key_t>::operator [] (const std::nullptr_t &/* null*/)
+template <typename val_t, typename key_t/*, typename alloc_t*/>
+val_t & noware::contnr::array <val_t, key_t/*, alloc_t*/>::operator [] (key_t const & key)
 {
-	value_t value;
-	//set (value);
-	return value;
+	// A basic implementation
+	// Add, if needed, and get the value by this key
+	
+	val_t const * val;
+	
+	if (!get (key, val))
+	{
+		val = new val_t const ();
+		//if (val == nullptr)
+		//	;
+		set (key, *val);
+	}
+	
+	return *val;
 }
 
-template <typename value_t, typename key_t>
-value_t & noware::contnr::array <value_t, key_t>::operator [] (const key_t & key)
+template <typename val_t, typename key_t/*, typename alloc_t*/>
+val_t & noware::contnr::array <val_t, key_t/*, alloc_t*/>::operator [] (std::nullptr_t const &/* null*/)
 {
-	value_t value;
-	get (key, value);
-	return value;
+	// Add a new value
+	val_t val;
+	//set (value);
+	return val;
 }

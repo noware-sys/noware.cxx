@@ -1,40 +1,40 @@
 //var (void) = default;
 var (void);
 
-var (const var &);
-var (const nr &);
+var (var const &);
 
-//var (const noware::container::text &);
-var (const std::string &);
-//var (const char []);
-var (const char *);
-//var (const unsigned char []);
-//var (const signed char []);
+//var (noware::container::text const &);
+var (std::string const &);
+var (char const []);
+//var (char *);
+//var (unsigned char []);
+//var (signed char []);
 
-var (const char &);
-//var (const unsigned char &);
-//var (const signed char &);
+var (char const &);
+//var (unsigned char const &);
+//var (signed char const &);
 
-var (const complex &);
-var (const real &);
-var (const rational &);
-var (const integer &);
-var (const _float &);
-var (const short_float &);
-var (const single_float &);
-var (const double_float &);
-var (const long_float &);
+var (cln::nr const &);
+var (cln::nr::complex const &);
+var (cln::nr::real const &);
+var (cln::nr::rational const &);
+var (cln::nr::integer const &);
+var (cln::nr::_float const &);
+var (cln::nr::short_float const &);
+var (cln::nr::single_float const &);
+var (cln::nr::double_float const &);
+var (cln::nr::long_float const &);
 
-var (const long double &);
-var (const double &);
-var (const float &);
+var (long double const &);
+var (double const &);
+var (float const &);
 
-var (const unsigned long long int &);
-var (const unsigned long int &);
-var (const unsigned int &);
-var (const unsigned short int &);
+var (unsigned long long int const &);
+var (unsigned long int const &);
+var (unsigned int const &);
+var (unsigned short int const &);
 
-var (const signed long long int &);
-var (const signed long int &);
-var (const signed int &);
-var (const signed short int &);
+var (signed long long int const &);
+var (signed long int const &);
+var (signed int const &);
+var (signed short int const &);

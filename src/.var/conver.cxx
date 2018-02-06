@@ -13,18 +13,12 @@ noware::var::operator const text (void) const
 		return content.text;
 }
 */
-
-noware::var::operator const noware::nr (void) const
+noware::var::operator std::string const (void) const
 {
-	return nr;
-}
-
-noware::var::operator const std::string (void) const
-{
-	if (t == type::nr)
-		return nr;
+	if (_type == type::nr)
+		return _nr.operator std::string const ();
 	else
-		return txt;
+		return _string;
 }
 
 //noware::var::operator const char [] (void) const
@@ -32,23 +26,21 @@ noware::var::operator const std::string (void) const
 //	return std::string (*this).c_str ();
 //}
 
-/*
-noware::var::operator const char * (void) const
-{
-	return operator const std::string ().c_str ();
-}
-
-noware::var::operator const char (void) const
+noware::var::operator char const (void) const
 {
 	//std::string str = std::string (*this);
-	std::string str = operator const std::string ();
+	std::string const str = operator std::string const ();
 	
 	if (str.size () == 1)
 		return str [0];
 	else
 		return '\0';
 }
-*/
+
+noware::var::operator char const * const (void) const
+{
+	return operator std::string const ().data ();
+}
 
 //noware::var::operator const nrs::natural (void) const
 //{
@@ -58,68 +50,75 @@ noware::var::operator const char (void) const
 //		return 0;	// A default value.
 //}
 
-noware::var::operator const complex (void) const
+noware::var::operator cln::nr const (void) const
 {
-	return nr;
+	return _nr;
 }
 
-noware::var::operator const real (void) const
+noware::var::operator cln::nr::complex const (void) const
 {
-	return nr;
+	return _nr.operator cln::nr::complex const ();
 }
 
-noware::var::operator const rational (void) const
+noware::var::operator cln::nr::real const (void) const
 {
-	return nr;
+	return _nr.operator cln::nr::real const ();
 }
 
-noware::var::operator const integer (void) const
+noware::var::operator cln::nr::rational const (void) const
 {
-	return nr;
+	return _nr.operator cln::nr::rational const ();
 }
 
-noware::var::operator const _float (void) const
+noware::var::operator cln::nr::integer const (void) const
 {
-	return nr;
+	return _nr.operator cln::nr::integer const ();
 }
 
-noware::var::operator const short_float (void) const
+noware::var::operator cln::nr::_float const (void) const
 {
-	return nr;
+	return _nr.operator cln::nr::_float const ();
 }
 
-noware::var::operator const single_float (void) const
+noware::var::operator cln::nr::short_float const (void) const
 {
-	return nr;
+	return _nr.operator cln::nr::short_float const ();
 }
 
-noware::var::operator const double_float (void) const
+noware::var::operator cln::nr::single_float const (void) const
 {
-	return nr;
+	return _nr.operator cln::nr::single_float const ();
 }
 
-noware::var::operator const long_float (void) const
+noware::var::operator cln::nr::double_float const (void) const
 {
-	return nr;
+	return _nr.operator cln::nr::double_float const ();
 }
 
-noware::var::operator const long double (void) const
+noware::var::operator cln::nr::long_float const (void) const
 {
-	return nr;
-}
-
-noware::var::operator const double (void) const
-{
-	return nr;
-}
-
-noware::var::operator const float (void) const
-{
-	return nr;
+	return _nr.operator cln::nr::long_float const ();
 }
 
 /*
-noware::var::operator const signed long long int (void) const
+noware::var::operator long double const (void) const
+{
+	return double (*this);
+}
+*/
+
+noware::var::operator double const (void) const
+{
+	return _nr.operator double const ();
+}
+
+noware::var::operator float const (void) const
+{
+	return _nr.operator float const ();
+}
+
+/*
+noware::var::operator signed long long int const (void) const
 {
 	//if (content.t == container::type::numeric)
 	//	return double_approx (content);
@@ -127,7 +126,7 @@ noware::var::operator const signed long long int (void) const
 		return 0;	// A default value.
 }
 
-noware::var::operator const unsigned long long int (void) const
+noware::var::operator unsigned long long int const (void) const
 {
 	//if (content.t == container::type::numeric)
 	//	return double_approx (content);
@@ -136,28 +135,28 @@ noware::var::operator const unsigned long long int (void) const
 }
 */
 
-noware::var::operator const signed long int (void) const
+noware::var::operator signed long int const (void) const
 {
-	return nr;
+	return _nr.operator signed long int const ();
 }
 
-noware::var::operator const unsigned long int (void) const
+noware::var::operator unsigned long int const (void) const
 {
-	return nr;
+	return _nr.operator unsigned long int const ();
 }
 
-noware::var::operator const signed int (void) const
+noware::var::operator signed int const (void) const
 {
-	return nr;
+	return _nr.operator signed int const ();
 }
 
-noware::var::operator const unsigned int (void) const
+noware::var::operator unsigned int const (void) const
 {
-	return nr;
+	return _nr.operator unsigned int const ();
 }
 
 /*
-noware::var::operator const signed short int (void) const
+noware::var::operator signed short int const (void) const
 {
 	//if (content.t == container::type::numeric)
 	//	return double_approx (content);
@@ -165,7 +164,7 @@ noware::var::operator const signed short int (void) const
 		return 0;	// A default value.
 }
 
-noware::var::operator const unsigned short int (void) const
+noware::var::operator unsigned short int const (void) const
 {
 	//if (content.t == container::type::numeric)
 	//	return double_approx (content);
@@ -174,7 +173,7 @@ noware::var::operator const unsigned short int (void) const
 }
 */
 /*
-noware::var::operator const bool (void) const
+noware::var::operator bool const (void) const
 {
 	if (content.t == container::type::numeric)
 	{

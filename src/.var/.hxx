@@ -22,7 +22,7 @@
 */
 
 #include "constr.hxx"
-//#include "destr.hxx"
+#include "destr.hxx"
 
 #include "conver.hxx"
 #include "set.hxx"

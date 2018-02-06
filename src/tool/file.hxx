@@ -10,8 +10,8 @@ namespace noware
 		{
 			namespace content
 			{
-				const bool get (const std::string &/* path*/, std::string &/* content*/);
-				const bool set (const std::string &/* path*/, const std::string &/* content*/);
+				bool const get (std::string const &/* path*/, std::string &/* content*/);
+				bool const set (std::string const &/* path*/, std::string const &/* content*/);
 			}	
 		}
 	}

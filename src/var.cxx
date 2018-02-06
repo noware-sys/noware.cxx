@@ -67,9 +67,10 @@
 
 #include "var.hxx"
 
-#include "nr.cxx"
+#include <cln/nr.cxx>
 #include "serial.cxx"
 #include "tool/string.cxx"
+#include ".var/.incl.cxx"
 
 #include ".var/.cxx"
 
@@ -80,9 +81,9 @@
 template <typename archive> 
 void noware::var::serialize (archive & arch, const unsigned int &/* version*/)
 {
-	arch & t;
-	arch & txt;
-	arch & nr;
+	arch & _type;
+	arch & _string;
+	arch & _nr;
 }
 /*
 const std::string noware::var::serialize (void) const
@@ -114,10 +115,10 @@ const std::string noware::var::to_str (void) const
 }
 */
 /**/
-const noware::nr noware::var::size (void) const
+const cln::nr noware::var::size (void) const
 {
 	//return std::string (*this).size ();
-	return operator const std::string ().size ();
+	return operator std::string const ().size ();
 }
 
 std::istream & getline (std::istream & stream, noware::var & value, const char delimiter)

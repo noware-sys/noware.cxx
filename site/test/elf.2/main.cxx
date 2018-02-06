@@ -60,7 +60,7 @@
 //};
 
 /*
-const unsigned int str_int (const std::string & block, const bool & swap = false)
+const unsigned int integer (const std::string & block, const bool & swap = false)
 {
 	unsigned int val;
 	unsigned int size;
@@ -149,15 +149,15 @@ int main (int argc, char * argv [])
 	unsigned long int vaddr;
 	unsigned long int filesz, memsz;
 	
-	phnum = noware::elf::str_int (file.hdr.phnum.data, true);
+	phnum = noware::elf::integer (file.hdr.phnum.data, true);
 	for (phndx = 0; phndx < phnum; ++phndx)
 	{
 		// If this program segment is of the type 'LOAD', then load it
-		if (noware::elf::str_int (file.prog [phndx].type.data, true) == 0x1/*PT_LOAD*/)
+		if (noware::elf::integer (file.prog [phndx].type.data, true) == 0x1/*PT_LOAD*/)
 		{
 			// Copy the program segment into memory
-			filesz = noware::elf::str_int (file.prog [phndx].filesz.data, true);
-			vaddr = noware::elf::str_int (file.prog [phndx].vaddr.data, true);
+			filesz = noware::elf::integer (file.prog [phndx].filesz.data, true);
+			vaddr = noware::elf::integer (file.prog [phndx].vaddr.data, true);
 			for (j = 0; j < filesz; ++j, ++vaddr)
 			{
 				// 8 bits (1 byte) at a time
@@ -166,7 +166,7 @@ int main (int argc, char * argv [])
 			}
 			
 			// Pad the remaining space with zeroes
-			memsz = noware::elf::str_int (file.prog [phndx].memsz.data, true);
+			memsz = noware::elf::integer (file.prog [phndx].memsz.data, true);
 			for (; j < memsz; ++j, ++vaddr)
 			{
 				dam [vaddr] = (unsigned char) '0';
@@ -177,12 +177,12 @@ int main (int argc, char * argv [])
 	
 	// Commence the program
 	unsigned long int entry;
-	entry = noware::elf::str_int (file.hdr.entry.data, true);
+	entry = noware::elf::integer (file.hdr.entry.data, true);
 	assert (dam.count (entry) > 0);
 	std::cout << std::hex;
 	std::cout << std::showbase;
 	std::cout << "entry[" << entry << "]==[";
-	std::cout << noware::elf::str_int (noware::unsigned_string (1, dam [entry]), true);
+	std::cout << noware::elf::integer (noware::unsigned_string (1, dam [entry]), true);
 	std::cout << "]";
 	std::cout << std::endl;
 }

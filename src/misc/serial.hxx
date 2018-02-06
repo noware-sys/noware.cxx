@@ -30,13 +30,13 @@ namespace noware
 		class serial
 		{
 			public:
-				virtual const std::string serialize (void) const;
-				virtual const bool deserialize (const std::string &);
+				virtual std::string const serialize (void) const;
+				virtual bool const deserialize (std::string const &);
 			protected:
 				friend class boost::serialization::access;
 				
 				template <typename archive>
-				void serialize (archive &, const unsigned int &/* version*/);
+				void serialize (archive &, unsigned int const &/* version*/);
 		};
 	//}
 }

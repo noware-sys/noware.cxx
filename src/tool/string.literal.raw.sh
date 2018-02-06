@@ -1,11 +1,20 @@
 #! /bin/bash
 
+# usage: $0 input.file output.file [delimiter]
 
 delimiter_default='';
 
-
-if test $# -lt 2
+#echo "${#}";
+if test "${#}" -lt 2
 then
+	if test "${1}" == '--help'
+	then
+		filename=$(basename ${0});
+		
+		echo "${filename}"': usage: '"'./${filename}'"' input.file output.file [delimiter]';
+		exit 0;
+	fi
+	
 	exit 1;
 fi
 
@@ -19,8 +28,9 @@ fi
 
 > "${2}";
 
-echo -e -n "u8R\"""${delimiter}""(\n" >> "${2}";
+echo -e -n "u8R\"""${delimiter}""(" >> "${2}";
 
 cat "${1}" >> "${2}";
 
-echo -e -n ")""${delimiter}""\"\n" >> "${2}";
+#echo -e -n ")""${delimiter}""\"\n" >> "${2}";
+echo -e -n ")""${delimiter}""\"" >> "${2}";

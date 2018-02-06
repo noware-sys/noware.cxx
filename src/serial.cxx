@@ -43,7 +43,7 @@ bool noware::parse (std::string serial, type & object)
 */
 
 template <typename type>
-const bool noware::serialize (std::string & serial, const type & object)
+bool const noware::serialize (std::string & serial, type const & object)
 {
 	try
 	{
@@ -73,7 +73,7 @@ const bool noware::serialize (std::string & serial, const type & object)
 }
 
 template <typename type>
-const bool noware::deserialize (type & object, const std::string & serial)
+bool const noware::deserialize (type & object, std::string const & serial)
 {
 	try
 	{
@@ -128,12 +128,13 @@ noware::serial::~serial (void)
 }
 */
 
+/*
 template <typename archive>
-void noware::serial::serialize (archive &, const unsigned int &/* version*/)
+void noware::serial::serialize (archive &, unsigned int const &/* version* /)
 {
 }
 
-const std::string noware::serial::serialize (void) const
+std::string const noware::serial::serialize (void) const
 {
 	std::string serial;
 	
@@ -143,7 +144,8 @@ const std::string noware::serial::serialize (void) const
 		return "";
 }
 
-const bool noware::serial::deserialize (const std::string & serial)
+bool const noware::serial::deserialize (std::string const & serial)
 {
 	return noware::deserialize <noware::serial> (*this, serial);
 }
+*/

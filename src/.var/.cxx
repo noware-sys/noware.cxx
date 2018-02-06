@@ -22,7 +22,7 @@
 */
 
 #include "constr.cxx"
-//#include "destr.cxx"
+#include "destr.cxx"
 
 #include "conver.cxx"
 #include "set.cxx"

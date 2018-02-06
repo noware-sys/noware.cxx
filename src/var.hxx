@@ -43,9 +43,10 @@
 //#include "content/value.hdr.cxx"
 //#include "serial.hxx"
 //#include "misc/serial.hxx"
-#include "nr.hxx"
+#include <cln/nr.hxx>
 #include "serial.hxx"
 #include "tool/string.hxx"
+#include ".var/.incl.hxx"
 
 //#include ".var/incl.hxx"
 
@@ -73,44 +74,339 @@ namespace noware
 		// type: fundamental primitive built-in intrinsic basic
 		// (container of a value) all any/ne container/contnr val[ue] cat[egory] var[iable] [con]struct[ure] class obj[ect] it[e]m id[entifier]
 		class var
-			: protected serial
-			, public nr
-			, boost::equality_comparable <var>
-			, boost::equality_comparable <var, nr>
+			: virtual public noware::serial
+			, virtual public boost::equality_comparable <var>
+			, virtual public boost::equality_comparable <var, std::string>
+			, virtual public boost::equality_comparable <var, cln::nr>
+			, virtual public boost::equality_comparable <var, char *>
+			, virtual public boost::equality_comparable <var, char>
+		//	, virtual public boost::equality_comparable <var, unsigned char>
+		//	, virtual public boost::equality_comparable <var, signed char>
+			, virtual public boost::equality_comparable <var, cln::cl_N>
+			, virtual public boost::equality_comparable <var, cln::cl_R>
+			, virtual public boost::equality_comparable <var, cln::cl_RA>
+			, virtual public boost::equality_comparable <var, cln::cl_I>
+			, virtual public boost::equality_comparable <var, cln::cl_F>
+			, virtual public boost::equality_comparable <var, cln::cl_SF>
+			, virtual public boost::equality_comparable <var, cln::cl_FF>
+			, virtual public boost::equality_comparable <var, cln::cl_DF>
+			, virtual public boost::equality_comparable <var, cln::cl_LF>
+			, virtual public boost::equality_comparable <var, long double>
+			, virtual public boost::equality_comparable <var, double>
+			, virtual public boost::equality_comparable <var, float>
+			, virtual public boost::equality_comparable <var, unsigned long long int>
+			, virtual public boost::equality_comparable <var, unsigned long int>
+			, virtual public boost::equality_comparable <var, unsigned int>
+			, virtual public boost::equality_comparable <var, unsigned short int>
+			, virtual public boost::equality_comparable <var, signed long long int>
+			, virtual public boost::equality_comparable <var, signed long int>
+			, virtual public boost::equality_comparable <var, signed int>
+			, virtual public boost::equality_comparable <var, signed short int>
 			/*
-			, boost::less_than_comparable <var>
-			, boost::less_than_comparable <nr>
+			, virtual public boost::less_than_comparable <var>
+			, virtual public boost::less_than_comparable <var, std::string>
+			, virtual public boost::less_than_comparable <var, char *>
+			, virtual public boost::less_than_comparable <var, char>
+		//	, virtual public boost::less_than_comparable <var, unsigned char>
+		//	, virtual public boost::less_than_comparable <var, signed char>
+			, virtual public boost::less_than_comparable <var, cln::cl_N>
+			, virtual public boost::less_than_comparable <var, cln::cl_R>
+			, virtual public boost::less_than_comparable <var, cln::cl_RA>
+			, virtual public boost::less_than_comparable <var, cln::cl_I>
+			, virtual public boost::less_than_comparable <var, cln::cl_F>
+			, virtual public boost::less_than_comparable <var, cln::cl_SF>
+			, virtual public boost::less_than_comparable <var, cln::cl_FF>
+			, virtual public boost::less_than_comparable <var, cln::cl_DF>
+			, virtual public boost::less_than_comparable <var, cln::cl_LF>
+			, virtual public boost::less_than_comparable <var, long double>
+			, virtual public boost::less_than_comparable <var, double>
+			, virtual public boost::less_than_comparable <var, float>
+			, virtual public boost::less_than_comparable <var, unsigned long long int>
+			, virtual public boost::less_than_comparable <var, unsigned long int>
+			, virtual public boost::less_than_comparable <var, unsigned int>
+			, virtual public boost::less_than_comparable <var, unsigned short int>
+			, virtual public boost::less_than_comparable <var, signed long long int>
+			, virtual public boost::less_than_comparable <var, signed long int>
+			, virtual public boost::less_than_comparable <var, signed int>
+			, virtual public boost::less_than_comparable <var, signed short int>
 			*/
-			, boost::addable <var>
-			, boost::addable <var, nr>
-			, boost::addable <var, char []>
-			, boost::addable <var, int>
-			, boost::subtractable <var>
-			, boost::subtractable <var, nr>
-			, boost::subtractable2_left <var, nr>
-			, boost::multipliable <nr>
-			, boost::multipliable <var, nr>
-			, boost::dividable <var>
-			, boost::dividable <var, nr>
-			, boost::dividable2_left <var, nr>
-			, boost::modable <var>
-			, boost::modable <var, nr>
-			, boost::modable2_left <var, nr>
-			, boost::xorable <var>
-			, boost::xorable <var, nr>
-			, boost::incrementable <var>
-			//, boost::incrementable <var, nr>
-			, boost::decrementable <var>
-			//, boost::decrementable <var, nr>
-		//	, boost::equivalent <var>
-		//	, boost::equivalent <var, nr>
-			, boost::partially_ordered <var>
-			, boost::partially_ordered <var, nr>
+			, virtual public boost::addable <var>
+			, virtual public boost::addable <var, std::string>
+			, virtual public boost::addable <var, cln::nr>
+			, virtual public boost::addable <var, char *>
+			, virtual public boost::addable <var, char>
+		//	, virtual public boost::addable <var, unsigned char>
+		//	, virtual public boost::addable <var, signed char>
+			, virtual public boost::addable <var, cln::cl_N>
+			, virtual public boost::addable <var, cln::cl_R>
+			, virtual public boost::addable <var, cln::cl_RA>
+			, virtual public boost::addable <var, cln::cl_I>
+			, virtual public boost::addable <var, cln::cl_F>
+			, virtual public boost::addable <var, cln::cl_SF>
+			, virtual public boost::addable <var, cln::cl_FF>
+			, virtual public boost::addable <var, cln::cl_DF>
+			, virtual public boost::addable <var, cln::cl_LF>
+			, virtual public boost::addable <var, long double>
+			, virtual public boost::addable <var, double>
+			, virtual public boost::addable <var, float>
+			, virtual public boost::addable <var, unsigned long long int>
+			, virtual public boost::addable <var, unsigned long int>
+			, virtual public boost::addable <var, unsigned int>
+			, virtual public boost::addable <var, unsigned short int>
+			, virtual public boost::addable <var, signed long long int>
+			, virtual public boost::addable <var, signed long int>
+			, virtual public boost::addable <var, signed int>
+			, virtual public boost::addable <var, signed short int>
+			, virtual public boost::subtractable <var>
+			, virtual public boost::subtractable <var, std::string>
+			, virtual public boost::subtractable <var, cln::nr>
+			, virtual public boost::subtractable <var, char *>
+			, virtual public boost::subtractable <var, char>
+		//	, virtual public boost::subtractable <var, unsigned char>
+		//	, virtual public boost::subtractable <var, signed char>
+			, virtual public boost::subtractable <var, cln::cl_N>
+			, virtual public boost::subtractable <var, cln::cl_R>
+			, virtual public boost::subtractable <var, cln::cl_RA>
+			, virtual public boost::subtractable <var, cln::cl_I>
+			, virtual public boost::subtractable <var, cln::cl_F>
+			, virtual public boost::subtractable <var, cln::cl_SF>
+			, virtual public boost::subtractable <var, cln::cl_FF>
+			, virtual public boost::subtractable <var, cln::cl_DF>
+			, virtual public boost::subtractable <var, cln::cl_LF>
+			, virtual public boost::subtractable <var, long double>
+			, virtual public boost::subtractable <var, double>
+			, virtual public boost::subtractable <var, float>
+			, virtual public boost::subtractable <var, unsigned long long int>
+			, virtual public boost::subtractable <var, unsigned long int>
+			, virtual public boost::subtractable <var, unsigned int>
+			, virtual public boost::subtractable <var, unsigned short int>
+			, virtual public boost::subtractable <var, signed long long int>
+			, virtual public boost::subtractable <var, signed long int>
+			, virtual public boost::subtractable <var, signed int>
+			, virtual public boost::subtractable <var, signed short int>
+			, virtual public boost::subtractable2_left <var, std::string>
+			, virtual public boost::subtractable2_left <var, cln::nr>
+			, virtual public boost::subtractable2_left <var, char *>
+			, virtual public boost::subtractable2_left <var, char>
+		//	, virtual public boost::subtractable2_left <var, unsigned char>
+		//	, virtual public boost::subtractable2_left <var, signed char>
+			, virtual public boost::subtractable2_left <var, cln::cl_N>
+			, virtual public boost::subtractable2_left <var, cln::cl_R>
+			, virtual public boost::subtractable2_left <var, cln::cl_RA>
+			, virtual public boost::subtractable2_left <var, cln::cl_I>
+			, virtual public boost::subtractable2_left <var, cln::cl_F>
+			, virtual public boost::subtractable2_left <var, cln::cl_SF>
+			, virtual public boost::subtractable2_left <var, cln::cl_FF>
+			, virtual public boost::subtractable2_left <var, cln::cl_DF>
+			, virtual public boost::subtractable2_left <var, cln::cl_LF>
+			, virtual public boost::subtractable2_left <var, long double>
+			, virtual public boost::subtractable2_left <var, double>
+			, virtual public boost::subtractable2_left <var, float>
+			, virtual public boost::subtractable2_left <var, unsigned long long int>
+			, virtual public boost::subtractable2_left <var, unsigned long int>
+			, virtual public boost::subtractable2_left <var, unsigned int>
+			, virtual public boost::subtractable2_left <var, unsigned short int>
+			, virtual public boost::subtractable2_left <var, signed long long int>
+			, virtual public boost::subtractable2_left <var, signed long int>
+			, virtual public boost::subtractable2_left <var, signed int>
+			, virtual public boost::subtractable2_left <var, signed short int>
+			, virtual public boost::multipliable <var>
+			, virtual public boost::multipliable <var, std::string>
+			, virtual public boost::multipliable <var, cln::nr>
+			, virtual public boost::multipliable <var, char *>
+			, virtual public boost::multipliable <var, char>
+		//	, virtual public boost::multipliable <var, unsigned char>
+		//	, virtual public boost::multipliable <var, signed char>
+			, virtual public boost::multipliable <var, cln::cl_N>
+			, virtual public boost::multipliable <var, cln::cl_R>
+			, virtual public boost::multipliable <var, cln::cl_RA>
+			, virtual public boost::multipliable <var, cln::cl_I>
+			, virtual public boost::multipliable <var, cln::cl_F>
+			, virtual public boost::multipliable <var, cln::cl_SF>
+			, virtual public boost::multipliable <var, cln::cl_FF>
+			, virtual public boost::multipliable <var, cln::cl_DF>
+			, virtual public boost::multipliable <var, cln::cl_LF>
+			, virtual public boost::multipliable <var, long double>
+			, virtual public boost::multipliable <var, double>
+			, virtual public boost::multipliable <var, float>
+			, virtual public boost::multipliable <var, unsigned long long int>
+			, virtual public boost::multipliable <var, unsigned long int>
+			, virtual public boost::multipliable <var, unsigned int>
+			, virtual public boost::multipliable <var, unsigned short int>
+			, virtual public boost::multipliable <var, signed long long int>
+			, virtual public boost::multipliable <var, signed long int>
+			, virtual public boost::multipliable <var, signed int>
+			, virtual public boost::multipliable <var, signed short int>
+			, virtual public boost::dividable <var>
+			, virtual public boost::dividable <var, std::string>
+			, virtual public boost::dividable <var, cln::nr>
+			, virtual public boost::dividable <var, char *>
+			, virtual public boost::dividable <var, char>
+		//	, virtual public boost::dividable <var, unsigned char>
+		//	, virtual public boost::dividable <var, signed char>
+			, virtual public boost::dividable <var, cln::cl_N>
+			, virtual public boost::dividable <var, cln::cl_R>
+			, virtual public boost::dividable <var, cln::cl_RA>
+			, virtual public boost::dividable <var, cln::cl_I>
+			, virtual public boost::dividable <var, cln::cl_F>
+			, virtual public boost::dividable <var, cln::cl_SF>
+			, virtual public boost::dividable <var, cln::cl_FF>
+			, virtual public boost::dividable <var, cln::cl_DF>
+			, virtual public boost::dividable <var, cln::cl_LF>
+			, virtual public boost::dividable <var, long double>
+			, virtual public boost::dividable <var, double>
+			, virtual public boost::dividable <var, float>
+			, virtual public boost::dividable <var, unsigned long long int>
+			, virtual public boost::dividable <var, unsigned long int>
+			, virtual public boost::dividable <var, unsigned int>
+			, virtual public boost::dividable <var, unsigned short int>
+			, virtual public boost::dividable <var, signed long long int>
+			, virtual public boost::dividable <var, signed long int>
+			, virtual public boost::dividable <var, signed int>
+			, virtual public boost::dividable <var, signed short int>
+			, virtual public boost::dividable2_left <var, std::string>
+			, virtual public boost::dividable2_left <var, cln::nr>
+			, virtual public boost::dividable2_left <var, char *>
+			, virtual public boost::dividable2_left <var, char>
+		//	, virtual public boost::dividable2_left <var, unsigned char>
+		//	, virtual public boost::dividable2_left <var, signed char>
+			, virtual public boost::dividable2_left <var, cln::cl_N>
+			, virtual public boost::dividable2_left <var, cln::cl_R>
+			, virtual public boost::dividable2_left <var, cln::cl_RA>
+			, virtual public boost::dividable2_left <var, cln::cl_I>
+			, virtual public boost::dividable2_left <var, cln::cl_F>
+			, virtual public boost::dividable2_left <var, cln::cl_SF>
+			, virtual public boost::dividable2_left <var, cln::cl_FF>
+			, virtual public boost::dividable2_left <var, cln::cl_DF>
+			, virtual public boost::dividable2_left <var, cln::cl_LF>
+			, virtual public boost::dividable2_left <var, long double>
+			, virtual public boost::dividable2_left <var, double>
+			, virtual public boost::dividable2_left <var, float>
+			, virtual public boost::dividable2_left <var, unsigned long long int>
+			, virtual public boost::dividable2_left <var, unsigned long int>
+			, virtual public boost::dividable2_left <var, unsigned int>
+			, virtual public boost::dividable2_left <var, unsigned short int>
+			, virtual public boost::dividable2_left <var, signed long long int>
+			, virtual public boost::dividable2_left <var, signed long int>
+			, virtual public boost::dividable2_left <var, signed int>
+			, virtual public boost::dividable2_left <var, signed short int>
+			, virtual public boost::modable <var>
+			, virtual public boost::modable <var, std::string>
+			, virtual public boost::modable <var, cln::nr>
+			, virtual public boost::modable <var, char *>
+			, virtual public boost::modable <var, char>
+		//	, virtual public boost::modable <var, unsigned char>
+		//	, virtual public boost::modable <var, signed char>
+			, virtual public boost::modable <var, cln::cl_N>
+			, virtual public boost::modable <var, cln::cl_R>
+			, virtual public boost::modable <var, cln::cl_RA>
+			, virtual public boost::modable <var, cln::cl_I>
+			, virtual public boost::modable <var, cln::cl_F>
+			, virtual public boost::modable <var, cln::cl_SF>
+			, virtual public boost::modable <var, cln::cl_FF>
+			, virtual public boost::modable <var, cln::cl_DF>
+			, virtual public boost::modable <var, cln::cl_LF>
+			, virtual public boost::modable <var, long double>
+			, virtual public boost::modable <var, double>
+			, virtual public boost::modable <var, float>
+			, virtual public boost::modable <var, unsigned long long int>
+			, virtual public boost::modable <var, unsigned long int>
+			, virtual public boost::modable <var, unsigned int>
+			, virtual public boost::modable <var, unsigned short int>
+			, virtual public boost::modable <var, signed long long int>
+			, virtual public boost::modable <var, signed long int>
+			, virtual public boost::modable <var, signed int>
+			, virtual public boost::modable <var, signed short int>
+			, virtual public boost::modable2_left <var, std::string>
+			, virtual public boost::modable2_left <var, cln::nr>
+			, virtual public boost::modable2_left <var, char *>
+			, virtual public boost::modable2_left <var, char>
+		//	, virtual public boost::modable2_left <var, unsigned char>
+		//	, virtual public boost::modable2_left <var, signed char>
+			, virtual public boost::modable2_left <var, cln::cl_N>
+			, virtual public boost::modable2_left <var, cln::cl_R>
+			, virtual public boost::modable2_left <var, cln::cl_RA>
+			, virtual public boost::modable2_left <var, cln::cl_I>
+			, virtual public boost::modable2_left <var, cln::cl_F>
+			, virtual public boost::modable2_left <var, cln::cl_SF>
+			, virtual public boost::modable2_left <var, cln::cl_FF>
+			, virtual public boost::modable2_left <var, cln::cl_DF>
+			, virtual public boost::modable2_left <var, cln::cl_LF>
+			, virtual public boost::modable2_left <var, long double>
+			, virtual public boost::modable2_left <var, double>
+			, virtual public boost::modable2_left <var, float>
+			, virtual public boost::modable2_left <var, unsigned long long int>
+			, virtual public boost::modable2_left <var, unsigned long int>
+			, virtual public boost::modable2_left <var, unsigned int>
+			, virtual public boost::modable2_left <var, unsigned short int>
+			, virtual public boost::modable2_left <var, signed long long int>
+			, virtual public boost::modable2_left <var, signed long int>
+			, virtual public boost::modable2_left <var, signed int>
+			, virtual public boost::modable2_left <var, signed short int>
+			, virtual public boost::xorable <var>
+			, virtual public boost::xorable <var, std::string>
+			, virtual public boost::xorable <var, cln::nr>
+			, virtual public boost::xorable <var, char *>
+			, virtual public boost::xorable <var, char>
+		//	, virtual public boost::xorable <var, unsigned char>
+		//	, virtual public boost::xorable <var, signed char>
+			, virtual public boost::xorable <var, cln::cl_N>
+			, virtual public boost::xorable <var, cln::cl_R>
+			, virtual public boost::xorable <var, cln::cl_RA>
+			, virtual public boost::xorable <var, cln::cl_I>
+			, virtual public boost::xorable <var, cln::cl_F>
+			, virtual public boost::xorable <var, cln::cl_SF>
+			, virtual public boost::xorable <var, cln::cl_FF>
+			, virtual public boost::xorable <var, cln::cl_DF>
+			, virtual public boost::xorable <var, cln::cl_LF>
+			, virtual public boost::xorable <var, long double>
+			, virtual public boost::xorable <var, double>
+			, virtual public boost::xorable <var, float>
+			, virtual public boost::xorable <var, unsigned long long int>
+			, virtual public boost::xorable <var, unsigned long int>
+			, virtual public boost::xorable <var, unsigned int>
+			, virtual public boost::xorable <var, unsigned short int>
+			, virtual public boost::xorable <var, signed long long int>
+			, virtual public boost::xorable <var, signed long int>
+			, virtual public boost::xorable <var, signed int>
+			, virtual public boost::xorable <var, signed short int>
+			
+			, virtual public boost::incrementable <var>
+			, virtual public boost::decrementable <var>
+		//	, virtual public boost::equivalent <nr>
+			
+			, virtual public boost::partially_ordered <var>
+			, virtual public boost::partially_ordered <var, std::string>
+			, virtual public boost::partially_ordered <var, cln::nr>
+			, virtual public boost::partially_ordered <var, char *>
+			, virtual public boost::partially_ordered <var, char>
+		//	, virtual public boost::partially_ordered <var, unsigned char>
+		//	, virtual public boost::partially_ordered <var, signed char>
+			, virtual public boost::partially_ordered <var, cln::cl_N>
+			, virtual public boost::partially_ordered <var, cln::cl_R>
+			, virtual public boost::partially_ordered <var, cln::cl_RA>
+			, virtual public boost::partially_ordered <var, cln::cl_I>
+			, virtual public boost::partially_ordered <var, cln::cl_F>
+			, virtual public boost::partially_ordered <var, cln::cl_SF>
+			, virtual public boost::partially_ordered <var, cln::cl_FF>
+			, virtual public boost::partially_ordered <var, cln::cl_DF>
+			, virtual public boost::partially_ordered <var, cln::cl_LF>
+			, virtual public boost::partially_ordered <var, long double>
+			, virtual public boost::partially_ordered <var, double>
+			, virtual public boost::partially_ordered <var, float>
+			, virtual public boost::partially_ordered <var, unsigned long long int>
+			, virtual public boost::partially_ordered <var, unsigned long int>
+			, virtual public boost::partially_ordered <var, unsigned int>
+			, virtual public boost::partially_ordered <var, unsigned short int>
+			, virtual public boost::partially_ordered <var, signed long long int>
+			, virtual public boost::partially_ordered <var, signed long int>
+			, virtual public boost::partially_ordered <var, signed int>
+			, virtual public boost::partially_ordered <var, signed short int>
 		{
 			public:
 				enum class type
 				{
-					txt,
+					string,
 					nr
 				};
 				
@@ -123,8 +419,9 @@ namespace noware
 				//const t & type (void) const;
 				//const bool is_text (void) const;
 				//const bool is_nr (void) const;
+				//bool const nr (void) const;
 				
-				const nr size (void) const;
+				cln::nr const size (void) const;
 				
 				/*
 				#include ".var/constructor.hxx"
@@ -203,7 +500,7 @@ namespace noware
 				friend class boost::serialization::access;
 				
 				template <typename archive>
-				void serialize (archive &, const unsigned int &/* version*/);
+				void serialize (archive &, unsigned int const &/* version*/);
 				
 				//container content;
 				//boost::any content;
@@ -223,10 +520,10 @@ namespace noware
 				//_type Determine (const long double);
 				
 				
-				type t;
+				type _type;
 				
-				std::string txt;
-				nr nr;
+				std::string _string;
+				cln::nr _nr;
 		};
 	//}
 	
@@ -234,7 +531,7 @@ namespace noware
 	//typedef any any, var;
 }
 
-std::istream & getline (std::istream &, noware::var &, const char = '\n');
+std::istream & getline (std::istream &, noware::var &, char const = '\n');
 
 //std::string		tolower (const noware::any &);
 //std::string		toupper (const noware::any &);

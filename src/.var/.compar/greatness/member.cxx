@@ -1,26 +1,161 @@
 // operator >
 /*
-const bool noware::nr::operator > (const nr & other) const
+bool const noware::var::operator > (nr const & other) const
 {
 	return false;
 }
 */
 /*
-const bool noware::nr::operator > (const text & other) const
+bool const noware::var::operator > (text const & other) const
 {
 	return *this > nr (other);
 }
 */
 
-const bool noware::var::operator > (const var & other) const
+bool const noware::var::operator > (std::string const & other) const
 {
-	//return *this > var (other);
+	return *this > var (other);
 	//return *(const_cast <const nr *> (this)) > *(const_cast <const nr *> (&(nr (other))));
-	return false;
 }
 
-const bool noware::var::operator > (const noware::nr & other) const
+bool const noware::var::operator > (char const * const other) const
 {
-	return operator > (var (other));
-	//return *(const_cast <const nr *> (this)) > *(const_cast <const nr *> (&(nr (other))));
+	return *this > var (other);
 }
+
+/*
+bool const noware::var::operator > (signed char [] other) const
+{
+	return *this > nr (other);
+}
+
+bool const noware::var::operator > (unsigned char [] other) const
+{
+	return *this > nr (other);
+}
+*/
+
+bool const noware::var::operator > (char const & other) const
+{
+	return *this > var (other);
+}
+/*
+bool const noware::var::operator > (signed char const & other) const
+{
+	return *this > nr (other);
+}
+
+bool const noware::var::operator > (unsigned char const & other) const
+{
+	return *this > nr (other);
+}
+*/
+bool const noware::var::operator > (cln::nr const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (cln::nr::complex const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (cln::nr::real const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (cln::nr::rational const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (cln::nr::integer const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (cln::nr::_float const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (cln::nr::short_float const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (cln::nr::single_float const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (cln::nr::double_float const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (cln::nr::long_float const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (long double const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (double const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (float const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (signed long long int const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (unsigned long long int const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (signed long int const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (unsigned long int const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (signed int const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (unsigned int const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (signed short int const & other) const
+{
+	return *this > var (other);
+}
+
+bool const noware::var::operator > (unsigned short int const & other) const
+{
+	return *this > var (other);
+}
+
+//bool const noware::var::operator > (bool const const & other) const
+//{
+//	return *this > var (other);
+//}
