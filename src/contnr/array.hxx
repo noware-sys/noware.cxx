@@ -112,13 +112,13 @@ namespace noware
 				virtual bool const exist (key_t const &/* key*/) const;
 				virtual bool const empty (void) const;
 				virtual bool const full (void) const;
-				virtual bool const/* success*/ get (key_t const &/* key*/, val_t/* const **/ &/* value*/) const;
+				virtual bool const/* success*/ get (key_t const &/* key*/, val_t const * &/* value*/) const;
 				virtual bool const/* success*/ set (key_t const &/* key*/, val_t const &/* value*/);
 				//key const & get_key (const key &) const;
 				virtual bool const/* success*/ clear (void);
 				virtual bool const/* success*/ remove (key_t const &/* key*/);
 				virtual bool const/* success*/ rename (key_t const &/* old_k*/, key_t const &/* new_k*/);
-				virtual val_t &/* value*/ operator [] (key_t const &/* key*/);
+				//virtual val_t &/* value*/ operator [] (key_t const &/* key*/);
 				//virtual val_t &/* value*/ operator [] (std::nullptr_t const &/* null*/);
 			//protected:
 			//	const bool get_ptr (const key_t &, value_t *) const;

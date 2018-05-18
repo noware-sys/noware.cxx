@@ -1,8 +1,9 @@
 #pragma once
 
 #include "string.hxx"
+#include <cln/nr.cxx>
 
-const std::string noware::random::string (const noware::nr & size, const std::string & set)
+const std::string noware::random::string (const cln::nr & size, const std::string & set)
 {
 	std::string result;
 	unsigned int size_i = (unsigned int) size;

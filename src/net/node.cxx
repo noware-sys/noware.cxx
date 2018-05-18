@@ -3,12 +3,12 @@
 #include "node.hxx"
 //#include "../var.cxx"
 //#include "../net/node.cxx"
-//#include "../net/cast.hxx"
+#include "cast.cxx"
 #include <string>
 #include <zmq/msg.cxx>
 //#include <zyre.h>
 #include <zyre.cxx>
-//#include <noware/nr.cxx>
+#include <noware/random/string.cxx>
 #include <cln/nr.cxx>
 
 std::string const noware::net::node::grp_dft = "noware::net::node";
@@ -28,7 +28,7 @@ noware::net::node::node (void)
 	
 	//_nodes.add (_node);
 	
-	assert (_node.reception_set (boost::bind (boost::mem_fn (&noware::net::node::rx), this, _1)));
+	assert (_node.rx_set (boost::bind (boost::mem_fn (&noware::net::node::rx), this, _1)));
 	//	return false;
 }
 
@@ -42,7 +42,7 @@ noware::net::node::~node (void)
 	
 	//stop ();
 	fin ();
-	assert (_node.reception_unset ());
+	assert (_node.rx_unset ());
 }
 
 const bool noware::net::node::fin (void)
@@ -226,7 +226,7 @@ const zmq::msg/* value*/ noware::net::node::anyval (const zmq::msg & expression,
 	}
 }
 
-const zmq::msg noware::net::node::multival (const zmq::msg & expression, const std::string & group)
+zmq::msg const noware::net::node::multival (const zmq::msg & expression, const std::string & group)
 {
 	zmq::msg result;
 	
@@ -247,7 +247,7 @@ const zmq::msg noware::net::node::multival (const zmq::msg & expression, const s
 	//return _nodes.respond ();
 }
 
-const zmq::msg/* value*/ noware::net::node::broadval (const zmq::msg & expression)
+zmq::msg const/* value*/ noware::net::node::broadval (const zmq::msg & expression)
 {
 	zmq::msg result;
 	
@@ -261,12 +261,12 @@ const zmq::msg/* value*/ noware::net::node::broadval (const zmq::msg & expressio
 	}
 }
 
-const zmq::msg noware::net::node::aggregate (const zmq::msg &/* result*//* from search_local*/, const zmq::msg & response/* from ...search*/, const zmq::msg &/* expression*/, const cln::nr &/* responses_count*/, const std::string &/* src*/, const net::cast &/* src_cast*/)
+zmq::msg const noware::net::node::aggregate (const zmq::msg &/* result*//* from search_local*/, const zmq::msg & response/* from ...search*/, const zmq::msg &/* expression*/, const cln::nr &/* responses_count*/, const std::string &/* src*/, const net::cast &/* src_cast*/)
 {
 	return response;
 }
 
-const zmq::msg noware::net::node::unicast (zmq::msg msg_req, /*const std::string & filter, */const std::string & peer)
+zmq::msg const noware::net::node::unicast (zmq::msg msg_req, /*const std::string & filter, */std::string const & peer)
 {
 	std::cerr << "noware::net::node::unicast()::called" << std::endl;
 	
@@ -279,7 +279,7 @@ const zmq::msg noware::net::node::unicast (zmq::msg msg_req, /*const std::string
 	request_token = noware::random::string (token_size_dft);
 	std::cerr << "noware::net::node::unicast()::request_token==[" << request_token << ']' << std::endl;
 	
-	msg_req.prepend (zmq::msg::frame ("noware::net::node::response::desired"));
+	msg_req.prepend (zmq::msg::frame (noware::net::node::grp_dft + std::string ("::response::desired")));
 	msg_req.prepend (zmq::msg::frame (request_token));
 	//msg_req.prepend (zmq::msg::frame ("noware::net::node::response"));
 	
@@ -310,7 +310,7 @@ const zmq::msg/* message: response*/ noware::net::node::anycast (zmq::msg msg_re
 	request_token = noware::random::string (token_size_dft);
 	std::cerr << "noware::net::node::anycast(msg)::request_token==[" << request_token << ']' << std::endl;
 	
-	msg_req.prepend (zmq::msg::frame ("noware::net::node::response::desired"));
+	msg_req.prepend (zmq::msg::frame (noware::net::node::grp_dft + std::string ("::response::desired")));
 	msg_req.prepend (zmq::msg::frame (request_token));
 	
 	if (!_node.anycast (msg_req, peer_id))
@@ -335,7 +335,7 @@ const zmq::msg/* message: response*/ noware::net::node::anycast (zmq::msg msg_re
 	request_token = noware::random::string (token_size_dft);
 	std::cerr << "noware::net::node::anycast(msg," << group << ")::request_token==[" << request_token << ']' << std::endl;
 	
-	msg_req.prepend (zmq::msg::frame ("noware::net::node::response::desired"));
+	msg_req.prepend (zmq::msg::frame (noware::net::node::grp_dft + std::string ("::response::desired")));
 	msg_req.prepend (zmq::msg::frame (request_token));
 	
 	std::cerr << "noware::net::node::anycast(" << group << ")::msg_req.data::pre-loop" << std::endl;
@@ -388,7 +388,7 @@ const zmq::msg noware::net::node::multicast (zmq::msg msg_req, cln::nr & respons
 	request_token = noware::random::string (token_size_dft);
 	std::cerr << "noware::net::node::multicast()::request_token==[" << request_token << ']' << std::endl;
 	
-	msg_req.prepend (zmq::msg::frame ("noware::net::node::response::desired"));
+	msg_req.prepend (zmq::msg::frame (noware::net::node::grp_dft + std::string ("::response::desired")));
 	msg_req.prepend (zmq::msg::frame (request_token));
 	
 	if (!_node.multicast (/*filter + */msg_req, group))
@@ -402,7 +402,7 @@ const zmq::msg noware::net::node::multicast (zmq::msg msg_req, cln::nr & respons
 	//return rx_local (message, filter);
 	//return rx_local (responses_count, request_token, group);
 	//return rx_local (grp_dft, responses_count, request_token, _node.peers_size (group));
-	return rx_local (request_token, _node.peers_size (group), responses_count, group, net::cast::multi);
+	return rx_local (request_token, _node.peer_size (group), responses_count, group, net::cast::multi);
 	
 	/*
 	// Prepare for reception.
@@ -440,7 +440,7 @@ const zmq::msg/* message: response*/ noware::net::node::broadcast (zmq::msg msg_
 	request_token = noware::random::string (token_size_dft);
 	std::cerr << "noware::net::node::broadast()::request_token==[" << request_token << ']' << std::endl;
 	
-	msg_req.prepend (zmq::msg::frame ("noware::net::node::response::desired"));
+	msg_req.prepend (zmq::msg::frame (noware::net::node::grp_dft + std::string ("::response::desired")));
 	msg_req.prepend (zmq::msg::frame (request_token));
 	
 	if (!_node.broadcast (msg_req))
@@ -450,12 +450,20 @@ const zmq::msg/* message: response*/ noware::net::node::broadcast (zmq::msg msg_
 	}
 	
 	//return rx_local (grp_dft, responses_count, request_token, _node.peers_size ());
-	return rx_local (request_token, _node.peers_size (), responses_count, "", net::cast::broad);
+	return rx_local (request_token, _node.peer_size (), responses_count, "", net::cast::broad);
 }
 
 void noware::net::node::rx (zyre_event_t * const event)
 {
 	std::cerr << "noware::net::node::receive()::called" << std::endl;
+	
+	if (event == nullptr)
+	{
+		std::cerr << "noware::net::node::receive()::event==nullptr" << std::endl;
+		std::cerr << "noware::net::node::receive()::return" << std::endl;
+		
+		return;
+	}
 	
 	//const char * event_type = zyre_event_type (event);
 	std::string event_type;
@@ -587,9 +595,9 @@ void noware::net::node::rx (zyre_event_t * const event)
 			
 			// This message is a response.
 			//if (response_token == "noware::net::node::response")
-			if (msg.first ()/* response_token*/ == "noware::net::node::response::voila")
+			if (msg.first ()/* response_token*/ == noware::net::node::grp_dft + std::string ("::response::voila"))
 			{
-				std::cerr << "noware::net::node::receive()::response[noware::net::node::response::voila]" << std::endl;
+				std::cerr << "noware::net::node::receive()::response[" << noware::net::node::grp_dft << "::response::voila]" << std::endl;
 				
 				msg.first_rm ();
 				
@@ -605,9 +613,9 @@ void noware::net::node::rx (zyre_event_t * const event)
 			}
 			// This message is a request;
 			// a response (confirmation) is also being requested.
-			else if (msg.first ()/* response_token*/ == "noware::net::node::response::desired")
+			else if (msg.first ()/* response_token*/ == noware::net::node::grp_dft + std::string ("::response::desired"))
 			{
-				std::cerr << "noware::net::node::receive()::request[noware::net::node::response::desired]" << std::endl;
+				std::cerr << "noware::net::node::receive()::request[" << noware::net::node::grp_dft << "::response::desired]" << std::endl;
 				
 				msg.first_rm ();
 				
@@ -619,19 +627,21 @@ void noware::net::node::rx (zyre_event_t * const event)
 				{
 					std::cerr << "noware::net::node::receive()::respond[true]" << std::endl;
 					
-					msg_response.prepend (zmq::msg::frame ("noware::net::node::response::voila"));
+					msg_response.prepend (zmq::msg::frame (noware::net::node::grp_dft + std::string ("::response::voila")));
 					msg_response.prepend (zmq::msg::frame (request_token));
 					
-					// Send back the answer.
+					// Send back the answer/confirmation.
 					result = _node.unicast (msg_response, zyre_event_peer_uuid (event));
 					
 					//if (result)
 					//{
-						std::cerr << "noware::net::node::receive()::respond_post[true]ing" << std::endl;
+						std::cerr << "noware::net::node::receive()::responded::result[" << result << "]" << std::endl;
+						
+						std::cerr << "noware::net::node::receive()::respond_post'ing" << std::endl;
 						
 						result = respond_post (msg_response, msg, event, event_type, src, src_cast, result);
 						
-						std::cerr << "noware::net::node::receive()::respond_post[true]ed" << std::endl;
+						std::cerr << "noware::net::node::receive()::respond_post'ed::result[" << result << "]" << std::endl;
 					//}
 				}
 				else
@@ -643,9 +653,9 @@ void noware::net::node::rx (zyre_event_t * const event)
 			// a response is not being requested.
 			else
 			{
-				std::cerr << "noware::net::node::receive()::request[noware::net::node::response::nondesired]" << std::endl;
+				std::cerr << "noware::net::node::receive()::request[" << noware::net::node::grp_dft << "::response::nondesired]" << std::endl;
 				
-				if (msg.first () == "noware::net::node::response::nondesired")
+				if (msg.first () == noware::net::node::grp_dft + std::string ("::response::nondesired"))
 					msg.first_rm ();
 				
 				zmq::msg msg_response;
@@ -740,11 +750,12 @@ const zmq::msg noware::net::node::rx_local (const std::string & request_token/*,
 	//zmq::socket_t receiver (context, ZMQ_REP);
 	//zmq::socket_t receiver (context, ZMQ_DEALER);
 	zmq::socket_t receiver (context, ZMQ_PULL);
-//	receiver.bind ("tcp://127.0.0.1:3210");
+	//receiver.bind ("tcp://127.0.0.1:3210");
 	//receiver.bind (conn.c_str ());
 	//receiver.bind ("tcp://0.0.0.0:5555");
 	receiver.bind ((std::string ("ipc://./") + request_token).c_str ());
 	//receiver.bind ((std::string ("inproc://") + request_token).c_str ());
+	//receiver.bind ((std::string ("inproc://test")).c_str ());
 	
 	//std::cerr << "noware::net::node::rx_local()::receiver.bind()==[" << bind_return_code << ']' << std::endl;
 	//linger = 0;	// No lingering...
@@ -796,7 +807,7 @@ const zmq::msg noware::net::node::rx_local (const std::string & request_token/*,
 	
 	//std::cerr << "noware::net::node::rx_local(response_type=[" << response_type << "], filter=[" << filter << "])::_node.size()==[" << _node.size () << ']' << std::endl;
 	//std::cerr << "noware::net::node::rx_local(filter=[" << filter << "])::_node.size()==[" << _node.size () << ']' << std::endl;
-	std::cerr << "noware::net::node::rx_local::_node.peers_size()==[" << _node.peers_size () << ']' << std::endl;
+	std::cerr << "noware::net::node::rx_local::_node.peers_size()==[" << _node.peer_size () << ']' << std::endl;
 	
 	/*
 	//zlist_t * peers;
@@ -952,11 +963,12 @@ bool const noware::net::node::unicast_local (zmq::msg const & msg, std::string c
 	//zmq::socket_t transmitter (context, ZMQ_REQ);
 	//zmq::socket_t transmitter (context, ZMQ_DEALER);
 	zmq::socket_t transmitter (context, ZMQ_PUSH);
-//	transmitter.connect ("tcp://127.0.0.1:3210");
+	//transmitter.connect ("tcp://127.0.0.1:3210");
 	//transmitter.connect (conn.c_str ());
 	//transmitter.bind ("tcp://*:5555");
 	transmitter.connect ((std::string ("ipc://./") + request_token).c_str ());
 	//transmitter.connect ((std::string ("inproc://") + request_token).c_str ());
+	//transmitter.connect ((std::string ("inproc://test")).c_str ());
 	
 	/////zmq::message_t filter_msg (sizeof (filter.c_str ()));
 	//zmq::message_t filter_msg (filter.length ());

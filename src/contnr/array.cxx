@@ -100,11 +100,12 @@ bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::empty (void) const
 	return size () <= 0;
 }
 
-template <typename val_t, typename key_t/*, typename alloc_t*/>
-val_t & noware::contnr::array <val_t, key_t/*, alloc_t*/>::operator [] (key_t const & key)
+/*
+template <typename val_t, typename key_t>
+val_t & noware::contnr::array <val_t, key_t>::operator [] (key_t const & key)
 {
 	// A basic implementation
-	// Add, if needed, and get the value by this key
+	// Get the value by this key, adding it if needed
 	
 	val_t const * val;
 	
@@ -113,17 +114,25 @@ val_t & noware::contnr::array <val_t, key_t/*, alloc_t*/>::operator [] (key_t co
 		val = new val_t const ();
 		//if (val == nullptr)
 		//	;
-		set (key, *val);
+		if (!set (key, *val))
+		{
+			delete val;
+			// return a reference to a local
+			//return val_t ();
+		}
 	}
 	
 	return *val;
 }
+*/
 
-template <typename val_t, typename key_t/*, typename alloc_t*/>
-val_t & noware::contnr::array <val_t, key_t/*, alloc_t*/>::operator [] (std::nullptr_t const &/* null*/)
+/*
+template <typename val_t, typename key_t>
+val_t & noware::contnr::array <val_t, key_t>::operator [] (std::nullptr_t const &)
 {
 	// Add a new value
 	val_t val;
 	//set (value);
 	return val;
 }
+*/

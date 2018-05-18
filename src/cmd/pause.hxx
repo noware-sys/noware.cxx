@@ -9,9 +9,9 @@ namespace noware
 	namespace cmd
 	{
 		#if (defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__))
-			void pause (const std::string & = "Press any key to continue . . . ");
+			void pause (const std::string & = "Press any key to continue ... ");
 		#else
-			void pause (const std::string & = "Press [Enter] to continue . . . ");
+			void pause (const std::string & = "Press [Enter] to continue ... ");
 		#endif
 	}
 }

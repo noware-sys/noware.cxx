@@ -21,7 +21,7 @@ noware::var const & noware::var::operator = (text const & other)
 */
 noware::var const & noware::var::operator = (std::string const & other)
 {
-	if (cln::nr::is (other))
+	if (cln::nr::valid (other))
 	{
 		_type = type::nr;
 		_string = "";
