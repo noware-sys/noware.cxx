@@ -6,9 +6,9 @@ namespace noware
 	{
 		enum class cast
 		{
+			broad,
 			uni,
-			multi,
-			broad
+			multi
 		};
 	}
 }

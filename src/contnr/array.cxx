@@ -52,9 +52,32 @@ bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::get (key_t const &
 }
 
 template <typename val_t, typename key_t/*, typename alloc_t*/>
+bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::get (key_t const &/* key*/, val_t &/* value*/) const
+{
+	return false;
+}
+
+template <typename val_t, typename key_t/*, typename alloc_t*/>
 bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::set (key_t const &/* key*/, val_t const &/* value*/)
 {
 	return false;
+}
+
+template <typename val_t, typename key_t/*, typename alloc_t*/>
+val_t &/* value*/ noware::contnr::array <val_t, key_t/*, alloc_t*/>::operator [] (key_t const & key)
+{
+	val_t const * val_ptr;
+	if (get (key, val_ptr))
+		return *(const_cast <val_t *> (val_ptr));
+	
+	// presumption: "set()" makes an internal copy of the value (operator=)
+	if (!set (key, val_dft))
+		// we must return something
+		return val_dft;
+	
+	// presumption: "get()" returns the internal copy
+	get (key, val_ptr);
+	return *(const_cast <val_t *> (val_ptr));
 }
 
 template <typename val_t, typename key_t/*, typename alloc_t*/>
@@ -72,12 +95,13 @@ const cln::nr noware::contnr::array <val_t, key_t/*, alloc_t*/>::size (void) con
 template <typename val_t, typename key_t/*, typename alloc_t*/>
 bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::exist (key_t const & key) const
 {
-	val_t const * val;
+	//val_t const * val;
+	val_t val;
 	return get (key, val);
 }
 
 template <typename val_t, typename key_t/*, typename alloc_t*/>
-bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::remove (key_t const &/* key*/)
+bool const noware::contnr::array <val_t, key_t/*, alloc_t*/>::del (key_t const &/* key*/)
 {
 	return false;
 }

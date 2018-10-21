@@ -8,7 +8,7 @@ namespace noware
 {
 	//namespace container
 	//{
-		typedef seq <char> text;
+		typedef seq <char> txt;
 		//typedef array <char, math::number::natural> text;
 		/*
 		class text

@@ -8,7 +8,7 @@ namespace noware
 {
 	/*
 	template <typename value_t>
-	// str[ing] seq[uence]
+	// ser[ial] str[ing] seq[uence]
 	class seq
 	{
 		public:

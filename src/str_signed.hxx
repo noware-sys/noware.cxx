@@ -6,5 +6,5 @@
 
 namespace noware
 {
-	typedef std::basic_string <signed char> signed_string;
+	typedef std::basic_string <char signed> str_signed;
 }

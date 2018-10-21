@@ -94,7 +94,7 @@ namespace noware
 			key == key
 		*/
 		//template <typename value, key> 
-		template <typename val_t = noware::var, typename key_t = noware::var/*, typename alloc_t = std::allocator <val_t>*/>
+		template <typename val_t = var, typename key_t = var/*, typename alloc_t = std::allocator <val_t>*/>
 		class array
 			//: public mach::dev
 			//, public net::node
@@ -113,16 +113,24 @@ namespace noware
 				virtual bool const empty (void) const;
 				virtual bool const full (void) const;
 				virtual bool const/* success*/ get (key_t const &/* key*/, val_t const * &/* value*/) const;
+				virtual bool const/* success*/ get (key_t const &/* key*/, val_t &/* value*/) const;
 				virtual bool const/* success*/ set (key_t const &/* key*/, val_t const &/* value*/);
+				virtual val_t &/* value*/ operator [] (key_t const &/* key*/);
 				//key const & get_key (const key &) const;
 				virtual bool const/* success*/ clear (void);
-				virtual bool const/* success*/ remove (key_t const &/* key*/);
+				virtual bool const/* success*/ del (key_t const &/* key*/);
 				virtual bool const/* success*/ rename (key_t const &/* old_k*/, key_t const &/* new_k*/);
 				//virtual val_t &/* value*/ operator [] (key_t const &/* key*/);
 				//virtual val_t &/* value*/ operator [] (std::nullptr_t const &/* null*/);
 			//protected:
 			//	const bool get_ptr (const key_t &, value_t *) const;
 			//	value_t _backup;
+				
+				typedef /*noware::*/var key_t_dft;
+				typedef /*noware::*/var val_t_dft;
+				
+				// to have a value to set (in "operator[]()")
+				val_t val_dft;
 		};
 		
 		// http://stackoverflow.com/questions/6907194/how-to-typedef-a-template-class

@@ -2,6 +2,7 @@
 
 // Boost serialization:
 #include <boost/serialization/serialization.hpp>
+#include <boost/serialization/split_free.hpp>
 #include <boost/serialization/split_member.hpp>	// For separating loading and saving.
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
@@ -19,9 +20,9 @@
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/version.hpp>
-#include <boost/serialization/split_member.hpp>
 
 #include "../serial.hxx"
+
 
 namespace noware
 {
@@ -35,8 +36,16 @@ namespace noware
 			protected:
 				friend class boost::serialization::access;
 				
+				// combined serialize() function
+				//template <typename archive>
+				//void serialize (archive &/* arch*/, int unsigned const &/* version*/);
+				BOOST_SERIALIZATION_SPLIT_MEMBER ()
+				
+				// separate save()/load() functions
 				template <typename archive>
-				void serialize (archive &, unsigned int const &/* version*/);
+				void save (archive &/* arch*/, int unsigned const/* version*/) const;
+				template <typename archive>
+				void load (archive &/* arch*/, int unsigned const/* version*/);
 		};
 	//}
 }

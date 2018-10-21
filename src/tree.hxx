@@ -83,7 +83,7 @@ namespace noware
 			: virtual public serial
 			//, virtual public misc::itrble <val_t>
 		{
-			protected:
+			private:
 				//type t;
 				bool _lit;
 				

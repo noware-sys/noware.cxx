@@ -2,7 +2,7 @@
 //#define VARIABLE_CPP
 //#pragma once
 
-#include "text.hxx"
+#include "txt.hxx"
 
 #include "seq.cxx"
 

@@ -1,5 +1,9 @@
 misc::elf
 	try to use unsigned int
+net::node
+	set default value of wanted reply, when transmitting,
+		to "::response::nondesired" (udp behaviour)
+		instead of "::response::desired" (tcp behaviour)
 mach::cpu
 	externally separate load_file
 mach

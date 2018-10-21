@@ -5,9 +5,19 @@
 #include "../serial.cxx"
 
 template <typename archive>
-void noware::serial::serialize (archive &, unsigned int const &/* version*/)
+void noware::serial::save (archive &/* arch*/, int unsigned const/* version*/) const
 {
 }
+
+template <typename archive>
+void noware::serial::load (archive &/* arch*/, int unsigned const/* version*/)
+{
+}
+
+// template <typename archive>
+// void noware::serial::serialize (archive &/* arch*/, unsigned int const &/* version* /)
+// {
+// }
 
 std::string const noware::serial::serialize (void) const
 {
